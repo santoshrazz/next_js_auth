@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { DBUSER } from "@/app/Interface/Interface";
 import jwt from "jsonwebtoken";
+import { connectToDb } from "@/app/db_config/connectDb";
+
+connectToDb();
 export async function POST(req: NextRequest) {
   try {
     const requestbody = await req.json();

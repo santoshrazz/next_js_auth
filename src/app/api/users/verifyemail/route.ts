@@ -1,6 +1,8 @@
+import { connectToDb } from "@/app/db_config/connectDb";
 import { userModel } from "@/app/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
+connectToDb();
 export async function POST(req: NextRequest) {
   try {
     // ------------> Receiving data from req.body <------------

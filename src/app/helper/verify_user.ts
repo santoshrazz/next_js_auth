@@ -11,14 +11,14 @@ export async function verifyJwtToken(req: NextRequest) {
       });
     }
     const token = tokenCookie.value;
-    const jwtResponse = jwt.verify(token, process.env.JWT_SECRET!);
+    const jwtResponse: any = jwt.verify(token, process.env.JWT_SECRET!);
     if (!jwtResponse) {
       return NextResponse.json({
         success: false,
         message: "User verification failed",
       });
     }
-    console.log(jwtResponse);
+    return jwtResponse.userId;
   } catch (error) {
     return NextResponse.json({
       success: false,

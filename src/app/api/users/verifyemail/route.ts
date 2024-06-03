@@ -3,25 +3,32 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
+    // ------------> Receiving data from req.body <------------
     const requestBody = await req.json();
     const { token } = requestBody;
-    console.log(`VerifyToken is `, token);
+
+    // ------------> Validate if no token found <------------
+
     if (!token) {
       return NextResponse.json({
         success: false,
         message: "Token not found",
       });
     }
+    // ------------> Finding user based on token <------------
     const user = await userModel.findOne({
       verifyToken: token,
-      verifyTokenExpiry: { $gt: Date.now },
+      verifyTokenExpiry: { $gt: Date.now() },
     });
+
+    // ------------> Checking if no user present <------------
     if (!user) {
       return NextResponse.json({
         success: false,
         message: "Email verification fail",
       });
     }
+    // ------------> Setting verification details and saving user <------------
     user.isverified = true;
     user.verifyToken = undefined;
     user.verifyTokenExpiry = undefined;

@@ -55,11 +55,11 @@ export async function POST(req: NextRequest) {
       mailType: "VERIFY",
       userId: newUser._id,
     });
-    console.log(mailResponse);
     return NextResponse.json({
       status: 200,
       success: true,
       message: "User Created",
+      newUser,
     });
   } catch (error: any) {
     console.log(`Error while creating user`, error.message);
